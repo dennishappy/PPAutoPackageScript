@@ -37,7 +37,25 @@ build_configuration="Release"
 # 导出ipa所需要的plist文件路径 (默认为AdHocExportOptionsPlist.plist)
 ExportOptionsPlistPath="./PPAutoPackageScript/AdHocExportOptionsPlist.plist"
 # 返回上一级目录,进入项目工程目录
-cd ..
+# cd ..
+
+echo "\033[36;1m请输入目录(拖入目录到终端完成,按回车即可) \033[0m"
+# 读取用户输入并存到变量里
+read parameterPath
+sleep 0.5
+project_path="$parameterPath"
+
+# 判读用户是否有输入
+if [ -n "$project_path" ]
+then
+    echo "$project_path"
+else
+    echo "请输入目录"
+    exit 1
+fi
+
+cd "$project_path"
+
 # 获取项目名称
 project_name=`find . -name *.xcodeproj | awk -F "[/.]" '{print $(NF-1)}'`
 # 获取版本号,内部版本号,bundleID
